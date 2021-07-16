@@ -29,20 +29,18 @@ namespace pu::ui
             std::function<void(u64 Down, u64 Up, u64 Held, Touch Pos)> GetOnInput();
             void AddThread(std::function<void()> Callback);
             std::vector<std::function<void()>> GetAllThreads();
-            void SetBackgroundImage(const std::string& Path);
-            void SetBackgroundJpegImage(void* JpegBuffer, s32 size);
-            void SetBackgroundRgbImage(void* RgbBuffer, u64 width, u64 height, u8 depth = 4);
+            void SetBackgroundImage(std::string Path);
             void SetBackgroundColor(Color Color);
             void SimulateTouch(Touch Custom);
             Touch GetSimulatedTouch();
-            render::NativeTexture GetBackgroundImageTexture();
+            sdl2::Texture GetBackgroundImageTexture();
             Color GetBackgroundColor();
             bool HasBackgroundImage();
         private:
             bool hasimage;
             Color overbgcolor;
             Touch simtouch;
-            render::NativeTexture overbgtex = nullptr;
+            sdl2::Texture overbgtex;
             std::function<void(u64, u64, u64, Touch)> onipt;
             std::vector<std::function<void()>> thds;
     };

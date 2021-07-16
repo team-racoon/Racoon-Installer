@@ -2,72 +2,60 @@
 
 namespace pu::ui::elm
 {
-    Image::Image(s32 X, s32 Y, const std::string& Image)
-        : Element::Element(), x(X), y(Y)
+    Image::Image(i32 X, i32 Y, String Image) : Element::Element()
     {
-        render::DeleteTexture(this->ntex);
-        this->rendopts = render::NativeTextureRenderOptions::Default;
+        this->x = X;
+        this->y = Y;
+        this->ntex = nullptr;
+        this->rendopts = render::TextureRenderOptions::Default;
         this->SetImage(Image);
-    }
-
-    Image::Image(s32 X, s32 Y, void* jpegbuffer, s32 size)
-        : Element::Element(), x(X), y(Y)
-    {
-        render::DeleteTexture(this->ntex);
-        this->rendopts = render::NativeTextureRenderOptions::Default;
-        this->SetJpegImage(jpegbuffer, size);
-    }
-
-    Image::Image(s32 X, s32 Y, void* rgbBuffer, u64 width, u64 height, u8 depth)
-        : Element::Element(), x(X), y(Y)
-    {
-        render::DeleteTexture(this->ntex);
-        this->rendopts = render::NativeTextureRenderOptions::Default;
-        this->SetRgbImage(rgbBuffer, width, height, depth);
     }
 
     Image::~Image()
     {
         if(this->ntex != nullptr)
+        {
             render::DeleteTexture(this->ntex);
+            this->ntex = nullptr;
+        }
     }
 
-    s32 Image::GetX()
+    i32 Image::GetX()
     {
         return this->x;
     }
 
-    void Image::SetX(s32 X)
+    void Image::SetX(i32 X)
     {
         this->x = X;
     }
 
-    s32 Image::GetY()
+    i32 Image::GetY()
     {
         return this->y;
     }
 
-    void Image::SetY(s32 Y)
+    void Image::SetY(i32 Y)
     {
         this->y = Y;
     }
 
-    s32 Image::GetWidth()
+    i32 Image::GetWidth()
     {
         return this->rendopts.Width;
     }
 
-    void Image::SetWidth(s32 Width)
+    void Image::SetWidth(i32 Width)
     {
         this->rendopts.Width = Width;
     }
 
-    s32 Image::GetHeight()
+    i32 Image::GetHeight()
     {
         return this->rendopts.Height;
     }
 
-    void Image::SetHeight(s32 Height)
+    void Image::SetHeight(i32 Height)
     {
         this->rendopts.Height = Height;
     }
@@ -82,47 +70,33 @@ namespace pu::ui::elm
         this->rendopts.Angle = Angle;
     }
 
-    void Image::SetImage(const std::string& Image)
+    String Image::GetImage()
     {
-        render::DeleteTexture(this->ntex);
-        std::ifstream ifs(Image);
+        return this->img;
+    }
+
+    void Image::SetImage(String Image)
+    {
+        if(this->ntex != nullptr) render::DeleteTexture(this->ntex);
+        this->ntex = nullptr;
+        std::ifstream ifs(Image.AsUTF8());
         bool ok = ifs.good();
         ifs.close();
         if(ok)    
         {
-            this->ntex = render::LoadImage(Image);
-            auto [w,h] = render::GetTextureSize(this->ntex);
-            this->rendopts.Width = w;
-            this->rendopts.Height = h;
+            this->img = Image;
+            this->ntex = render::LoadImage(Image.AsUTF8());
+            this->rendopts.Width = render::GetTextureWidth(this->ntex);
+            this->rendopts.Height = render::GetTextureHeight(this->ntex);
         }
-    }
-
-    void Image::SetJpegImage(void* buffer, s32 size)
-    {
-        if (size == 0)
-            return;
-        render::DeleteTexture(this->ntex);
-        this->ntex = render::LoadJpegImage(buffer, size);
-        auto [w,h] = render::GetTextureSize(this->ntex);
-        this->rendopts.Width = w;
-        this->rendopts.Height = h;
-    }
-
-    void Image::SetRgbImage(void* buffer, u64 width, u64 height, u8 depth)
-    {
-        render::DeleteTexture(this->ntex);
-        this->ntex = render::LoadRgbImage(buffer, width, height, depth);
-        auto [w,h] = render::GetTextureSize(this->ntex);
-        this->rendopts.Width = w;
-        this->rendopts.Height = h;
     }
 
     bool Image::IsImageValid()
     {
-        return ntex != NULL;
+        return ((ntex != nullptr) && this->img.HasAny());
     }
 
-    void Image::OnRender(render::Renderer::Ref &Drawer, s32 X, s32 Y)
+    void Image::OnRender(render::Renderer::Ref &Drawer, i32 X, i32 Y)
     {
         Drawer->RenderTexture(this->ntex, X, Y, this->rendopts);
     }

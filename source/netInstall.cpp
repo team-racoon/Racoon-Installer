@@ -260,8 +260,8 @@ namespace netInstStuff{
                 }
 
                 // Break on input pressed
-                hidScanInput();
-                u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+                inst::ui::mainApp->UpdateButtons();
+                u64 kDown = inst::ui::mainApp->GetButtonsDown();
                 
 
                 if (kDown & HidNpadButton_B)
