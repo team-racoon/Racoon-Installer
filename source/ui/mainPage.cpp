@@ -158,15 +158,15 @@ namespace inst::ui {
         	if (std::filesystem::exists(inst::config::appDir + "/images/Background.png")) this->SetBackgroundImage(inst::config::appDir + "/images/Background.png");
         	else
         		this->SetBackgroundImage("romfs:/images/Background.png");
-        		//this->appVersionText = TextBlock::New(1240, 680, "v" + inst::config::appVersion, 20);
+        		//this->appVersionText = TextBlock::New(1240, 680, "v" + inst::config::appVersion);
         }
         else {
         	this->SetBackgroundImage("romfs:/images/Background.png");
         	this->titleImage = Image::New(0, 0, "romfs:/images/Main.png");
-        	//this->appVersionText = TextBlock::New(1200, 700, "v" + inst::config::appVersion, 10);
+        	//this->appVersionText = TextBlock::New(1200, 700, "v" + inst::config::appVersion);
         }
         //this->appVersionText->SetColor(COLOR("#FFFFFFFF"));
-        this->butText = TextBlock::New(10, 678, "main.buttons"_lang, 24);
+        this->butText = TextBlock::New(10, 678, "main.buttons"_lang);
         this->butText->SetColor(COLOR("#FFFFFFFF"));
         this->optionMenu = pu::ui::elm::Menu::New(0, 95, 1280, COLOR("#343E8700"), 94, 6);
         this->optionMenu->SetOnFocusColor(COLOR("#4f4f4d33"));
