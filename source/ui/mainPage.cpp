@@ -52,7 +52,7 @@ namespace inst::ui {
     Image::Ref getRacoonImage() {
         if( appletGetAppletType() == AppletType_LibraryApplet) {
             return Image::New( 630, 89, "romfs:/images/applet.webp");
-        } return Image::New( 690, 200, "romfs:/images/override.webp");
+        } return Image::New( 690, 150, "romfs:/images/override.webp");
     }
 
     MainPage::MainPage() : Layout::Layout() {
