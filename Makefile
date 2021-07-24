@@ -41,10 +41,10 @@ TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source source/ui source/data source/install source/nx source/nx/ipc source/util
 DATA		:=	data
-INCLUDES	:=	include include/ui include/data include/install include/nx include/nx/ipc include/util include/Plutonium/Plutonium/Output-switch/include include/Plutonium/Plutonium/out/include
-APP_TITLE	:=	TinWoo Installer
-APP_AUTHOR	:=	MrDude
-APP_VERSION	:=	1.0.3
+INCLUDES	:=	include include/ui include/data include/install include/nx include/nx/ipc include/util include/Plutonium/Plutonium/out/include
+APP_TITLE	:=	Racoon Installer
+APP_AUTHOR	:=	MrDude & Team Racoon
+APP_VERSION	:=	1.1.0
 ROMFS		:=	romfs
 APP_ICON	:=	icon.jpg
 

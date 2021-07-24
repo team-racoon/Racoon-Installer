@@ -1,2 +1,8 @@
-/include/Plutonium
+/include/Plutonium/*
 /build
+*.exe
+*.bat
+*.dll
+*.elf
+*.nro
+*.nacp

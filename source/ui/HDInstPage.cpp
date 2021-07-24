@@ -5,48 +5,33 @@
 #include "HDInstall.hpp"
 #include "util/util.hpp"
 #include "util/config.hpp"
+#include "util/color.hpp"
 #include "util/lang.hpp"
-
-#define COLOR(hex) pu::ui::Color::FromHex(hex)
 
 namespace inst::ui {
     extern MainApplication *mainApp;
 
     HDInstPage::HDInstPage() : Layout::Layout() {
-        this->infoRect = Rectangle::New(0, 95, 1280, 60, COLOR("#00000080"));
-        this->SetBackgroundColor(COLOR("#000000FF"));
-        this->topRect = Rectangle::New(0, 0, 1280, 94, COLOR("#000000FF"));
-        this->botRect = Rectangle::New(0, 659, 1280, 61, COLOR("#000000FF"));
-        
-    		if (inst::config::gayMode) {
-    			if
-    				(std::filesystem::exists(inst::config::appDir + "/images/Hd.png")) this->titleImage = Image::New(0, 0, (inst::config::appDir + "/images/Hd.png"));
-    			else 
-    				this->titleImage = Image::New(0, 0, "romfs:/images/Hd.png");
-    			
-    			if
-    				(std::filesystem::exists(inst::config::appDir + "/images/Background.png")) this->SetBackgroundImage(inst::config::appDir + "/images/Background.png");
-    			else
-    				this->SetBackgroundImage("romfs:/images/Background.png");
-    				this->appVersionText = TextBlock::New(0, 0, "");
-            }
-        
-        else {
-        			this->SetBackgroundImage("romfs:/images/Background.png");
-        			this->titleImage = Image::New(0, 0, "romfs:/images/Hd.png");
-              this->appVersionText = TextBlock::New(0, 0, "");
-              }
-        this->appVersionText->SetColor(COLOR("#FFFFFFFF"));
+        this->infoRect = Rectangle::New(0, 95, 1280, 60, TRANSPARENT_DARK);
+        this->SetBackgroundColor(BLACK);
+        this->topRect = Rectangle::New(0, 0, 1280, 94, TRANSPARENT_LIGHT);
+        this->botRect = Rectangle::New(0, 659, 1280, 61, BLACK);
+        this->SetBackgroundImage(inst::util::getBackground());
+        this->logoImage = Image::New(20, 8, "romfs:/images/mapache-switch.png");
+        this->titleImage = Image::New(160, 8, "romfs:/images/hdd.webp");
+        this->appVersionText = TextBlock::New(1195, 60, "v" + inst::config::appVersion);
+        this->appVersionText->SetColor(WHITE);
         this->pageInfoText = TextBlock::New(10, 109, "inst.hd.top_info"_lang);
-        this->pageInfoText->SetColor(COLOR("#FFFFFFFF"));
+        this->pageInfoText->SetColor(WHITE);
         this->butText = TextBlock::New(10, 678, "inst.hd.buttons"_lang);
-        this->butText->SetColor(COLOR("#FFFFFFFF"));
-        this->menu = pu::ui::elm::Menu::New(0, 156, 1280, COLOR("#FFFFFF00"), 84, (506 / 84));
-        this->menu->SetOnFocusColor(COLOR("#4f4f4d33"));
-        this->menu->SetScrollbarColor(COLOR("#1A1919FF"));
+        this->butText->SetColor(WHITE);
+        this->menu = pu::ui::elm::Menu::New(0, 156, 1280, TRANSPARENT, 56, 9);
+        this->menu->SetOnFocusColor(TRANSPARENT_LIGHTER);
+        this->menu->SetScrollbarColor(TRANSPARENT_LIGHTER);
         this->Add(this->topRect);
         this->Add(this->infoRect);
         this->Add(this->botRect);
+        this->Add(this->logoImage);
         this->Add(this->titleImage);
         this->Add(this->appVersionText);
         this->Add(this->butText);
@@ -78,7 +63,7 @@ namespace inst::ui {
 
         std::string itm = "..";
         auto ourEntry = pu::ui::elm::MenuItem::New(itm);
-        ourEntry->SetColor(COLOR("#FFFFFFFF"));
+        ourEntry->SetColor(WHITE);
         ourEntry->SetIcon("romfs:/images/icons/folder-upload.png");
         this->menu->AddItem(ourEntry);
 
@@ -86,14 +71,14 @@ namespace inst::ui {
             if (file == "..") break;
             std::string itm = file.filename().string();
             auto ourEntry = pu::ui::elm::MenuItem::New(itm);
-            ourEntry->SetColor(COLOR("#FFFFFFFF"));
+            ourEntry->SetColor(WHITE);
             ourEntry->SetIcon("romfs:/images/icons/folder.png");
             this->menu->AddItem(ourEntry);
         }
         for (auto& file: this->ourFiles) {
             std::string itm = file.filename().string();
             auto ourEntry = pu::ui::elm::MenuItem::New(itm);
-            ourEntry->SetColor(COLOR("#FFFFFFFF"));
+            ourEntry->SetColor(WHITE);
             ourEntry->SetIcon("romfs:/images/icons/checkbox-blank-outline.png");
             for (long unsigned int i = 0; i < this->selectedTitles.size(); i++) {
                 if (this->selectedTitles[i] == file) {
@@ -139,11 +124,17 @@ namespace inst::ui {
 
     void HDInstPage::startInstall() {
         int dialogResult = -1;
+        std::vector<std::string> freeSpace = inst::util::mathstuff();
+        std::string info = "space.SD.free"_lang + ": " + freeSpace[4] + " GB\n" + "space.system.free"_lang + ": " + freeSpace[1] + " GB\n\n";
+        std::string dialogTitle;
         if (this->selectedTitles.size() == 1) {
-            dialogResult = mainApp->CreateShowDialog("inst.target.desc0"_lang + inst::util::shortenString(std::filesystem::path(this->selectedTitles[0]).filename().string(), 32, true) + "inst.target.desc1"_lang, "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
-        } else dialogResult = mainApp->CreateShowDialog("inst.target.desc00"_lang + std::to_string(this->selectedTitles.size()) + "inst.target.desc01"_lang, "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
+            dialogTitle = "inst.target.desc0"_lang + inst::util::shortenString(std::filesystem::path(this->selectedTitles[0]).filename().string(), 32, true) + "inst.target.desc1"_lang;
+        } else {
+            dialogTitle = "inst.target.desc00"_lang + std::to_string(this->selectedTitles.size()) + "inst.target.desc01"_lang;
+        };
+        dialogResult = mainApp->CreateShowDialog(dialogTitle, info + "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
         if (dialogResult == -1) return;
-        	nspInstStuff_B::installNspFromFile(this->selectedTitles, dialogResult);
+        nspInstStuff_B::installNspFromFile(this->selectedTitles, dialogResult);
     }
 
     void HDInstPage::onInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {

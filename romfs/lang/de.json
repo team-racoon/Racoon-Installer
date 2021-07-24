@@ -11,7 +11,7 @@
         },
 		"theme": {
             "title": "Use Theme",
-            "desc": "Press OK to quit Tinwoo or Cancel to continue.\n\nThemes will activate the next time you start Tinwoo."
+            "desc": "Press OK to quit Racoon Installer or Cancel to continue.\n\nThemes will activate the next time you start Racoon Installer."
 		},
 		"hdd": {
 			"title": "USB HDD",
@@ -34,7 +34,7 @@
         },
         "applet": {
             "title": "Applet-Modus wird nicht unterstützt",
-            "desc": "Es kann zu Problemen bei der Verwendung des TinWoo Installer im Applet-Modus kommen.\nWenn du Probleme hast, starte den TinWoo Installer über einen installierten Titel (halte R gedrückt, während du ein Spiel startest)!"
+            "desc": "Es kann zu Problemen bei der Verwendung des Racoon Installer im Applet-Modus kommen.\nWenn du Probleme hast, starte den Racoon Installer über einen installierten Titel (halte R gedrückt, während du ein Spiel startest)!"
         },
         "buttons": "\ue0e0 Auswählen    \ue0e3 Freiraum    \ue0e1 Beenden"
     },
@@ -42,7 +42,7 @@
         "net": {
             "help": {
                 "title": "Hilfe",
-                "desc": "Dateien können von anderen Geräten aus mit Tools wie NS-USBloader im\nTinfoil-Modus installiert werden. Um Dateien an deine Switch zu senden, öffne\neins dieser Programme auf deinem PC oder mobilen Gerät. Gebe die IP-Adresse\ndeiner Switches ein (auf dem Bildschirm aufgelistet), wähle die Dateien\naus und lade sie dann auf die Konsole hoch! Wenn die von dir verwendete\nSoftware dir nicht erlaubt, bestimmte Dateitypen auszuwählen.\nVersuche die Dateiendung in etwas umzubenennen, dass sie akzeptiert. Der TinWoo Installer\nprüft keine Dateiendungen bei Netzinstallationen!\n\nFalls das nicht klappt, kopiere einfach deine Dateien auf die SD-Karte\nund versuche die Option \"Von SD-Karte installieren\" im Hauptmenü!"
+                "desc": "Dateien können von anderen Geräten aus mit Tools wie NS-USBloader im\nTinfoil-Modus installiert werden. Um Dateien an deine Switch zu senden, öffne\neins dieser Programme auf deinem PC oder mobilen Gerät. Gebe die IP-Adresse\ndeiner Switches ein (auf dem Bildschirm aufgelistet), wähle die Dateien\naus und lade sie dann auf die Konsole hoch! Wenn die von dir verwendete\nSoftware dir nicht erlaubt, bestimmte Dateitypen auszuwählen.\nVersuche die Dateiendung in etwas umzubenennen, dass sie akzeptiert. Der Racoon Installer\nprüft keine Dateiendungen bei Netzinstallationen!\n\nFalls das nicht klappt, kopiere einfach deine Dateien auf die SD-Karte\nund versuche die Option \"Von SD-Karte installieren\" im Hauptmenü!"
             },
             "src": {
                 "title": "Von wo aus willst du installieren?",
@@ -124,7 +124,7 @@
         },
         "nca_verify": {
             "title": "Ungültige NCA-Signatur erkannt!",
-            "desc": "Unsachgemäß signierte Software sollte nur von vertrauenswürdigen Quellen\ninstalliert werden. Dateien von gepackten Spiele Modulen und DLC-Freischaltung enthalten,\nwerden immer diese Warnung anzeigen. Sie können diese Prüfung in den Einstellungen des TinWoo Installer deaktivieren.\nSind Sie sicher, dass Sie die Installation fortsetzen möchten?",
+            "desc": "Unsachgemäß signierte Software sollte nur von vertrauenswürdigen Quellen\ninstalliert werden. Dateien von gepackten Spiele Modulen und DLC-Freischaltung enthalten,\nwerden immer diese Warnung anzeigen. Sie können diese Prüfung in den Einstellungen des Racoon Installer deaktivieren.\nSind Sie sicher, dass Sie die Installation fortsetzen möchten?",
             "opt1": "Ja, ich verstehe die Risiken",
             "error": "Die gewünschte NCA ist nicht richtig signiert: "
         },
@@ -148,7 +148,7 @@
         "backup_failed": "Konnte die hekate patches.ini nicht finden! Trotzdem installieren?",
         "backup_failed_desc": "Falls du hekate nicht nutzt, kannst du diese Warnung ignorieren.",
         "download_failed": "Konnte die Signatur Patches nicht herunterladen",
-        "download_failed_desc": "Eventuell hast du eine ungültige Quelle in den Einstellung\nvom TinWoo Installer eingestellt oder der Host ist derzeitig offline.",
+        "download_failed_desc": "Eventuell hast du eine ungültige Quelle in den Einstellung\nvom Racoon Installer eingestellt oder der Host ist derzeitig offline.",
         "version_text2": "Deine Signatur Patches wurden aktualisiert, für deine HOS Version ",
         "install_complete": "Installation abgeschlossen!",
         "complete_desc": "Starte die Konsole neu um die Änderung zu übernehmen",
@@ -167,12 +167,12 @@
             "nca_verify": "Verifiziere NCA Signatur vor der Installation",
             "boost_mode": "Aktiviere \"Boost-Modus\" während der Installation",
             "ask_delete": "Frage ob installierte Titel gelöscht werden sollen",
-            "auto_update": "Suche automatisch nach Updates für TinWoo Installer",
+            "auto_update": "Suche automatisch nach Updates für Racoon Installer",
             "gay_option": "Thema verwenden",
             "useSound": "Use sound notifications during installs",
             "sig_url": "Signatur Patches URL: ",
             "language": "Sprache: ",
-            "check_update": "Suche nach Updates für TinWoo Installer",
+            "check_update": "Suche nach Updates für Racoon Installer",
             "credits": "Anerkennung"
         },
         "nca_warn": {
@@ -183,28 +183,28 @@
         "sig_hint": "Gebe eine URL an, um Signatur Patches zu beziehen",
         "update": {
             "title": "Neue Version verfügbar",
-            "desc0": "TinWoo Installer ",
+            "desc0": "Racoon Installer ",
             "desc1": " ist jetzt verfügbar! Bereit zu aktualisieren?",
             "opt0": "Aktualisieren",
-            "top_info": "Aktualisierung zu TinWoo Installer ",
-            "bot_info": "Beziehe TinWoo Installer ",
-            "bot_info2": "Extrahiere TinWoo Installer ",
+            "top_info": "Aktualisierung zu Racoon Installer ",
+            "bot_info": "Beziehe Racoon Installer ",
+            "bot_info2": "Extrahiere Racoon Installer ",
             "complete": "Aktualisierung vollständig!",
             "failed": "Aktualisierung fehlgeschlagen!",
             "end_desc": "Die Software wird nun beendet.",
             "title_check_fail": "Keine Aktualisierungen gefunden",
-            "desc_check_fail": "Du bist auf der aktuellsten Version des TinWoo Installer!"
+            "desc_check_fail": "Du bist auf der aktuellsten Version des Racoon Installer!"
         },
         "credits": {
             "title": "Vielen Dank an die folgenden Leute!",
-            "desc": "TinWoo - MrDude\nTinleaf - BlaWar\nAwoo Installer - Huntereb\nHard Drive Support - DarkMatterCore\n\n\nhttps://github.com/Huntereb/Awoo-Installer\nhttps://github.com/blawar/tinleaf\nhttps://github.com/DarkMatterCore/libusbhsfs\n\nThanks for testing - LyuboA"
+            "desc": "Tinwoo - MrDude\nAwoo Installer - Huntereb\nHard Drive Support - DarkMatterCore\n\n\nhttps://github.com/Huntereb/Awoo-Installer\nhttps://github.com/DarkMatterCore/libusbhsfs\n\n"
         },
         "language": {
-            "title": "Wähle TinWoo Installer Sprache",
+            "title": "Wähle Racoon Installer Sprache",
             "desc": "Die Software wird danach beendet. Drücke B um den Vorgang abzubrechen.",
             "system_language": "System"
         },
-        "title": "Ändere TinWoo Installer Einstellungen!",
+        "title": "Ändere Racoon Installer Einstellungen!",
         "buttons": "\ue0e0 Auswählen/Ändern    \ue0e1 Abbrechen "
     },
     "common": {

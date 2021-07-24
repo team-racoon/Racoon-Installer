@@ -2,50 +2,40 @@
 #include "ui/MainApplication.hpp"
 #include "util/util.hpp"
 #include "util/config.hpp"
+#include "util/color.hpp"
 #include "util/lang.hpp"
 #include "usbInstall.hpp"
-
-
-#define COLOR(hex) pu::ui::Color::FromHex(hex)
 
 namespace inst::ui {
     extern MainApplication *mainApp;
 
     usbInstPage::usbInstPage() : Layout::Layout() {
-			this->infoRect = Rectangle::New(0, 95, 1280, 60, COLOR("#00000080"));
-			this->SetBackgroundColor(COLOR("#000000FF"));
-			this->topRect = Rectangle::New(0, 0, 1280, 94, COLOR("#000000FF"));
-			this->botRect = Rectangle::New(0, 659, 1280, 61, COLOR("#000000FF"));
-
-				if (inst::config::gayMode) {
-					if (std::filesystem::exists(inst::config::appDir + "/images/Usb.png")) this->titleImage = Image::New(0, 0, (inst::config::appDir + "/images/Usb.png"));
-						else this->titleImage = Image::New(0, 0, "romfs:/images/Usb.png");
-					if (std::filesystem::exists(inst::config::appDir + "/images/Background.png")) this->SetBackgroundImage(inst::config::appDir + "/images/Background.png");
-						else this->SetBackgroundImage("romfs:/images/Background.png");
-									this->appVersionText = TextBlock::New(0, 0, "");
-				}
-				else {
-					this->SetBackgroundImage("romfs:/images/Background.png");
-					this->titleImage = Image::New(0, 0, "romfs:/images/Usb.png");
-					this->appVersionText = TextBlock::New(0, 0, "");
-				}
-        this->appVersionText->SetColor(COLOR("#FFFFFFFF"));
+        this->infoRect = Rectangle::New(0, 95, 1280, 60, TRANSPARENT_DARK);
+        this->SetBackgroundColor(BLACK);
+        this->topRect = Rectangle::New(0, 0, 1280, 94, TRANSPARENT_LIGHT);
+        this->botRect = Rectangle::New(0, 659, 1280, 61, BLACK);
+        this->SetBackgroundImage(inst::util::getBackground());
+        this->logoImage = Image::New(20, 8, "romfs:/images/mapache-switch.png");
+        this->titleImage = Image::New(160, 8, "romfs:/images/usb.webp");
+        this->appVersionText = TextBlock::New(1195, 60, "v" + inst::config::appVersion);
+        this->appVersionText->SetColor(WHITE);
         this->pageInfoText = TextBlock::New(10, 109, "");
-        this->pageInfoText->SetColor(COLOR("#FFFFFFFF"));
+        this->pageInfoText->SetColor(WHITE);
         this->butText = TextBlock::New(10, 678, "");
-        this->butText->SetColor(COLOR("#FFFFFFFF"));
-        this->menu = pu::ui::elm::Menu::New(0, 156, 1280, COLOR("#FFFFFF00"), 84, (506 / 84));
-        this->menu->SetOnFocusColor(COLOR("#4f4f4d33"));
-        this->menu->SetScrollbarColor(COLOR("#1A1919FF"));
+        this->butText->SetColor(WHITE);
+        this->menu = pu::ui::elm::Menu::New(0, 156, 1280, TRANSPARENT, 56, 9);
+        this->menu->SetOnFocusColor(TRANSPARENT_LIGHTER);
+        this->menu->SetScrollbarColor(TRANSPARENT_LIGHTER);
         this->infoImage = Image::New(460, 332, "romfs:/images/icons/usb-connection-waiting.png");
         this->Add(this->topRect);
         this->Add(this->infoRect);
-        this->Add(this->botRect);
+        this->Add(this->logoImage);
         this->Add(this->titleImage);
         this->Add(this->appVersionText);
-        this->Add(this->butText);
         this->Add(this->pageInfoText);
         this->Add(this->menu);
+        this->Add(this->botRect);
+        this->Add(this->butText);
         this->Add(this->infoImage);
     }
 
@@ -55,7 +45,7 @@ namespace inst::ui {
         for (auto& url: this->ourTitles) {
             std::string itm = inst::util::shortenString(inst::util::formatUrlString(url), 56, true);
             auto ourEntry = pu::ui::elm::MenuItem::New(itm);
-            ourEntry->SetColor(COLOR("#FFFFFFFF"));
+            ourEntry->SetColor(WHITE);
             ourEntry->SetIcon("romfs:/images/icons/checkbox-blank-outline.png");
             for (long unsigned int i = 0; i < this->selectedTitles.size(); i++) {
                 if (this->selectedTitles[i] == url) {
@@ -102,8 +92,15 @@ namespace inst::ui {
 
     void usbInstPage::startInstall() {
         int dialogResult = -1;
-        if (this->selectedTitles.size() == 1) dialogResult = mainApp->CreateShowDialog("inst.target.desc0"_lang + inst::util::shortenString(inst::util::formatUrlString(this->selectedTitles[0]), 32, true) + "inst.target.desc1"_lang, "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
-        else dialogResult = mainApp->CreateShowDialog("inst.target.desc00"_lang + std::to_string(this->selectedTitles.size()) + "inst.target.desc01"_lang, "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
+        std::vector<std::string> freeSpace = inst::util::mathstuff();
+        std::string info = "space.SD.free"_lang + ": " + freeSpace[4] + " GB\n" + "space.system.free"_lang + ": " + freeSpace[1] + " GB\n\n";
+        std::string dialogTitle;
+        if (this->selectedTitles.size() == 1){
+             dialogTitle = "inst.target.desc0"_lang  + inst::util::shortenString(inst::util::formatUrlString(this->selectedTitles[0]), 32, true) + "inst.target.desc1"_lang;
+        } else {
+            dialogTitle = "inst.target.desc00"_lang + std::to_string(this->selectedTitles.size()) + "inst.target.desc01"_lang;
+        }
+        dialogResult = mainApp->CreateShowDialog(dialogTitle, info + "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
         if (dialogResult == -1) return;
         usbInstStuff::installTitleUsb(this->selectedTitles, dialogResult);
         return;

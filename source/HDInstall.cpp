@@ -95,11 +95,11 @@ namespace nspInstStuff_B {
             inst::ui::instPage::setInstBarPerc(0);
             std::string audioPath = "";
             if (std::filesystem::exists(inst::config::appDir + "/sounds/OHNO.WAV")) {
-            		audioPath = (inst::config::appDir + "/sounds/OHNO.WAV");
-            		}
-            		else {
-            			audioPath = "romfs:/audio/bark.wav";
-            		}
+                audioPath = (inst::config::appDir + "/sounds/OHNO.WAV");
+            }
+            else {
+                audioPath = "romfs:/audio/bark.wav";
+            }
             std::thread audioThread(inst::util::playAudio,audioPath);
             inst::ui::mainApp->CreateShowDialog("inst.info_page.failed"_lang + inst::util::shortenString(ourTitleList[titleItr].filename().string(), 42, true) + "!", "inst.info_page.failed_desc"_lang + "\n\n" + (std::string)e.what(), {"common.ok"_lang}, true);
             audioThread.join();
@@ -126,37 +126,36 @@ namespace nspInstStuff_B {
             		}
             	std::thread audioThread(inst::util::playAudio,audioPath);				
 
-              if (ourTitleList.size() > 1) {
-                  if (inst::config::deletePrompt) {
-                      if(inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.hd.delete_info_multi"_lang, "inst.hd.delete_desc"_lang, {"common.no"_lang,"common.yes"_lang}, false) == 1) {
-                          for (long unsigned int i = 0; i < ourTitleList.size(); i++) {
-                              if (std::filesystem::exists(ourTitleList[i])) std::filesystem::remove(ourTitleList[i]);
-                          }
-                      }
-                  } else inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.info_page.desc0"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
-              } else {
-                  if (inst::config::deletePrompt) {
-                      if(inst::ui::mainApp->CreateShowDialog(inst::util::shortenString(ourTitleList[0].filename().string(), 32, true) + "inst.hd.delete_info"_lang, "inst.hd.delete_desc"_lang, {"common.no"_lang,"common.yes"_lang}, false) == 1) if (std::filesystem::exists(ourTitleList[0])) std::filesystem::remove(ourTitleList[0]);
-                  } else inst::ui::mainApp->CreateShowDialog(inst::util::shortenString(ourTitleList[0].filename().string(), 42, true) + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
-              }
-              
-              audioThread.join();
+                if (ourTitleList.size() > 1) {
+                    if (inst::config::deletePrompt) {
+                        if(inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.hd.delete_info_multi"_lang, "inst.hd.delete_desc"_lang, {"common.no"_lang,"common.yes"_lang}, false) == 1) {
+                            for (long unsigned int i = 0; i < ourTitleList.size(); i++) {
+                                if (std::filesystem::exists(ourTitleList[i])) std::filesystem::remove(ourTitleList[i]);
+                            }
+                        }
+                    } else inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.info_page.desc0"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
+                } else {
+                    if (inst::config::deletePrompt) {
+                        if(inst::ui::mainApp->CreateShowDialog(inst::util::shortenString(ourTitleList[0].filename().string(), 32, true) + "inst.hd.delete_info"_lang, "inst.hd.delete_desc"_lang, {"common.no"_lang,"common.yes"_lang}, false) == 1) if (std::filesystem::exists(ourTitleList[0])) std::filesystem::remove(ourTitleList[0]);
+                    } else inst::ui::mainApp->CreateShowDialog(inst::util::shortenString(ourTitleList[0].filename().string(), 42, true) + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
+                }
+                audioThread.join();
             }
             
             else{
             	if (ourTitleList.size() > 1) {
-                  if (inst::config::deletePrompt) {
-                      if(inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.hd.delete_info_multi"_lang, "inst.hd.delete_desc"_lang, {"common.no"_lang,"common.yes"_lang}, false) == 1) {
-                          for (long unsigned int i = 0; i < ourTitleList.size(); i++) {
-                              if (std::filesystem::exists(ourTitleList[i])) std::filesystem::remove(ourTitleList[i]);
-                          }
-                      }
-                  } else inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.info_page.desc0"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
-              } else {
-                  if (inst::config::deletePrompt) {
-                      if(inst::ui::mainApp->CreateShowDialog(inst::util::shortenString(ourTitleList[0].filename().string(), 32, true) + "inst.hd.delete_info"_lang, "inst.hd.delete_desc"_lang, {"common.no"_lang,"common.yes"_lang}, false) == 1) if (std::filesystem::exists(ourTitleList[0])) std::filesystem::remove(ourTitleList[0]);
-                  } else inst::ui::mainApp->CreateShowDialog(inst::util::shortenString(ourTitleList[0].filename().string(), 42, true) + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
-              }
+                    if (inst::config::deletePrompt) {
+                        if(inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.hd.delete_info_multi"_lang, "inst.hd.delete_desc"_lang, {"common.no"_lang,"common.yes"_lang}, false) == 1) {
+                            for (long unsigned int i = 0; i < ourTitleList.size(); i++) {
+                                if (std::filesystem::exists(ourTitleList[i])) std::filesystem::remove(ourTitleList[i]);
+                            }
+                        }
+                    } else inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.info_page.desc0"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
+                } else {
+                    if (inst::config::deletePrompt) {
+                        if(inst::ui::mainApp->CreateShowDialog(inst::util::shortenString(ourTitleList[0].filename().string(), 32, true) + "inst.hd.delete_info"_lang, "inst.hd.delete_desc"_lang, {"common.no"_lang,"common.yes"_lang}, false) == 1) if (std::filesystem::exists(ourTitleList[0])) std::filesystem::remove(ourTitleList[0]);
+                    } else inst::ui::mainApp->CreateShowDialog(inst::util::shortenString(ourTitleList[0].filename().string(), 42, true) + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
+                }
             }
         }
 

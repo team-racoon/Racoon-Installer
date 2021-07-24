@@ -17,6 +17,49 @@
 #include "util/usb_comms_tinleaf.h"
 #include "util/json.hpp"
 #include "nx/usbhdd.h"
+#include <sys/statvfs.h>
+
+int statvfs(const char *path, struct statvfs *buf);
+
+double GetAvailableSpace(const char* path)
+{
+  struct statvfs stat;
+
+  if (statvfs(path, &stat) != 0) {
+    // error happens, just quits here
+    return -1;
+  }
+
+  // the available size is f_bsize * f_bavail
+  return stat.f_bsize * stat.f_bavail;
+}
+
+double amountOfDiskSpaceUsed(const char* path)
+{
+    struct statvfs stat;
+
+    if (statvfs(path, &stat) != 0) {
+      // error happens, just quits here
+      return -1;
+    }
+    const auto total           = static_cast<unsigned long>(stat.f_blocks);
+    const auto available       = static_cast<unsigned long>(stat.f_bavail);
+    const auto availableToRoot = static_cast<unsigned long>(stat.f_bfree);
+    const auto used            = total - availableToRoot;
+    const auto nonRootTotal    = used + available;
+    return 100.0 * static_cast<double>(used) / static_cast<double>(nonRootTotal);
+}
+
+double totalsize(const char* path)
+{
+    struct statvfs stat;
+
+    if (statvfs(path, &stat) != 0) {
+      // error happens, just quits here
+      return -1;
+    }
+    return stat.f_blocks * stat.f_frsize;
+}
 
 namespace inst::util {
     void initApp () {
@@ -262,6 +305,14 @@ namespace inst::util {
         struct in_addr addr = {(in_addr_t) gethostid()};
         return inet_ntoa(addr);
     }
+    //Return the path to background depends the Applet Mode
+    std::string getBackground(){
+        if(appletGetAppletType() == AppletType_LibraryApplet){
+            return "romfs:/images/bgApplet.png";
+        }else{
+            return "romfs:/images/bg.png";
+        }
+    }
     
     int getUsbState() {
         UsbState usbState = UsbState_Detached;
@@ -302,7 +353,7 @@ namespace inst::util {
     
    std::vector<std::string> checkForAppUpdate () {
         try {
-        		std::string giturl = "https://api.github.com/repos/mrdude2478/TinWoo/releases/latest";
+        		std::string giturl = "https://api.github.com/repos/team-racoon/TinWoo/releases/latest";
             std::string jsonData = inst::curl::downloadToBuffer(giturl, 0, 0, 1000L);
             if (jsonData.size() == 0) return {};
             nlohmann::json ourJson = nlohmann::json::parse(jsonData);
@@ -313,5 +364,69 @@ namespace inst::util {
             }
         } catch (...) {}
         return {};
+    }
+
+    // Return a vector [size internal, free internal, % internal, size SD, free SD, % SD]
+    std::vector<std::string> mathstuff() {
+    	double math = (GetAvailableSpace("./") / 1024) / 1024; //megabytes
+    	float math2 = ((float)math / 1024); //gigabytes
+    	
+    	double used = (amountOfDiskSpaceUsed("./")); //same file path as sdmc
+    	
+    	double total = (totalsize("sdmc:/") / 1024) / 1024; //megabytes
+    	float total2 = ((float)total / 1024); //gigabytes
+    	//
+    	float GB = math2;
+    	std::stringstream stream;
+    	stream << std::fixed << std::setprecision(2) << GB; //only show 2 decimal places
+    	std::string freespace = stream.str();
+    		
+    		
+    	float GB2 = total2;
+    	std::stringstream stream2;
+    	stream2 << std::fixed << std::setprecision(2) << GB2; //only show 2 decimal places
+    	std::string sdsize = stream2.str();
+    	   		
+    	//printf("\nSdCard Free Space in MB: %li", math);
+    	//printf("\nSdCard Free Space in GB: %.2f", math2);
+    	std::stringstream stream3;
+    	stream3 << std::fixed << std::setprecision(2) << used; //only show 2 decimal places
+    	std::string percent = stream3.str();
+    		
+    	//unmount sd here and mount system....
+    	//fsdevUnmountDevice("sdmc");
+    	FsFileSystem nandFS;
+    	fsOpenBisFileSystem(&nandFS, FsBisPartitionId_User, "");
+        fsdevMountDevice("user", nandFS);
+        
+        double math3 = (GetAvailableSpace("user:/") / 1024) / 1024; //megabytes
+    	float math4 = ((float)math3 / 1024); //gigabytes
+    	
+    	double used2 = (amountOfDiskSpaceUsed("user:/")); //same file path as sdmc
+    	
+    	double total3 = (totalsize("user:/") / 1024) / 1024; //megabytes
+    	float total4 = ((float)total3 / 1024); //gigabytes
+    	//
+    	float GB3 = math4;
+    	std::stringstream stream4;
+    	stream4 << std::fixed << std::setprecision(2) << GB3; //only show 2 decimal places
+    	std::string freespace2 = stream4.str();
+    		
+    		
+    	float GB4 = total4;
+    	std::stringstream stream5;
+    	stream5 << std::fixed << std::setprecision(2) << GB4; //only show 2 decimal places
+    	std::string sdsize2 = stream5.str();
+    	   		
+    	//printf("\nSdCard Free Space in MB: %li", math);
+    	//printf("\nSdCard Free Space in GB: %.2f", math2);
+    	std::stringstream stream6;
+    	stream6 << std::fixed << std::setprecision(2) << used2; //only show 2 decimal places
+    	std::string percent2 = stream6.str();
+    	
+    	//unmount user now as we already know how much space we have	
+    	fsdevUnmountDevice("user");
+    	
+    	return {sdsize2,freespace2,percent2,sdsize,freespace,percent};
     }
 }

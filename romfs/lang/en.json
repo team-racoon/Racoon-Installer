@@ -5,13 +5,13 @@
             "net": "Install over LAN or internet",
             "usb": "Install over USB",
             "hdd": "Install over USB HDD",
-            "sig": "Manage signature patches",
+            "sig": "Check NSH version",
             "set": "Settings",
             "exit": "Exit"
         },
 		"theme": {
             "title": "Use Theme",
-            "desc": "Press OK to quit Tinwoo or Cancel to continue.\n\nThemes will activate the next time you start Tinwoo."
+            "desc": "Press OK to quit Racoon Installer or Cancel to continue.\n\nThemes will activate the next time you start Racoon Installer."
 		},
 		"hdd": {
 			"title": "USB HDD",
@@ -34,7 +34,7 @@
         },
         "applet": {
             "title": "Applet Mode not supported",
-            "desc": "You may experience issues using TinWoo Installer in Applet Mode. If you do\nhave problems, please switch to running TinWoo Installer over an installed\ntitle (hold R while starting a game)!"
+            "desc": "You may experience issues using Racoon Installer in Applet Mode. If you do\nhave problems, please switch to running Racoon Installer over an installed\ntitle (hold R while starting a game)!"
         },
         "buttons": "\ue0e0 Select    \ue0e3 FreeSpace    \ue0e1 Exit  "
     },
@@ -42,7 +42,7 @@
         "net": {
             "help": {
                 "title": "Help",
-                "desc": "Files can be installed remotely from your other devices using tools such\nas NS-USBloader in Tinfoil mode. To send files to your Switch, open one\nof these pieces of software on your PC or mobile device, input your\nSwitch's IP address (listed on-screen), select your files, then upload\nto your console! If the software you're using won't let you select\nspecific file types, try renaming the extension to something it accepts.\nTinWoo Installer doesn't care about file extensions during net installations!\n\nIf you can't figure it out, just copy your files to your SD card and try\nthe \"Install from SD Card\" option on the main menu!"
+                "desc": "Files can be installed remotely from your other devices using tools such\nas NS-USBloader in Tinfoil mode. To send files to your Switch, open one\nof these pieces of software on your PC or mobile device, input your\nSwitch's IP address (listed on-screen), select your files, then upload\nto your console! If the software you're using won't let you select\nspecific file types, try renaming the extension to something it accepts.\nRacoon Installer doesn't care about file extensions during net installations!\n\nIf you can't figure it out, just copy your files to your SD card and try\nthe \"Install from SD Card\" option on the main menu!"
             },
             "src": {
                 "title": "Where do you want to install from?",
@@ -124,7 +124,7 @@
         },
         "nca_verify": {
             "title": "Invalid NCA signature detected!",
-            "desc": "Improperly signed software should only be installed from trustworthy\nsources. Files containing cartridge repacks and DLC unlockers will always\nshow this warning. You can disable this check in TinWoo Installer's settings.\n\nAre you sure you want to continue the installation?",
+            "desc": "Improperly signed software should only be installed from trustworthy\nsources. Files containing cartridge repacks and DLC unlockers will always\nshow this warning. You can disable this check in Racoon Installer's settings.\n\nAre you sure you want to continue the installation?",
             "opt1": "Yes, I understand the risks",
             "error": "The requested NCA is not properly signed: "
         },
@@ -148,7 +148,7 @@
         "backup_failed": "Could not back up Hekate patches.ini! Install anyway?",
         "backup_failed_desc": "If you don't use Hekate you can ignore this warning.",
         "download_failed": "Could not download signature patches",
-        "download_failed_desc": "You may have supplied an invalid source in TinWoo Installer's settings,\nor the host may just be down right now.",
+        "download_failed_desc": "You may have supplied an invalid source in Racoon Installer's settings,\nor the host may just be down right now.",
         "version_text2": "Your signature patches have been updated for up to HOS version ",
         "install_complete": "Install complete!",
         "complete_desc": "Restart your console to apply",
@@ -167,12 +167,11 @@
             "nca_verify": "Verify NCA signatures before installation",
             "boost_mode": "Enable \"boost mode\" during installations",
             "ask_delete": "Ask to delete original files after installation",
-            "auto_update": "Check for updates to TinWoo Installer automatically",
-            "gay_option": "Use Theme",
+            "auto_update": "Check for updates to Racoon Installer automatically",
             "useSound": "Use sound notifications during installs",
             "sig_url": "Signature patches source URL: ",
             "language": "Language: ",
-            "check_update": "Check for updates to TinWoo Installer",
+            "check_update": "Check for updates to Racoon Installer",
             "credits": "Credits"
         },
         "nca_warn": {
@@ -183,28 +182,28 @@
         "sig_hint": "Enter the URL to obtain Signature Patches from",
         "update": {
             "title": "Update available",
-            "desc0": "TinWoo Installer ",
+            "desc0": "Racoon Installer ",
             "desc1": " is available now! Ready to update?",
             "opt0": "Update",
-            "top_info": "Updating to TinWoo Installer ",
-            "bot_info": "Downloading TinWoo Installer ",
-            "bot_info2": "Extracting TinWoo Installer ",
+            "top_info": "Updating to Racoon Installer ",
+            "bot_info": "Downloading Racoon Installer ",
+            "bot_info2": "Extracting Racoon Installer ",
             "complete": "Update complete!",
             "failed": "Update failed!",
             "end_desc": "The software will now be closed.",
             "title_check_fail": "No updates found",
-            "desc_check_fail": "You are on the latest version of TinWoo Installer!"
+            "desc_check_fail": "You are on the latest version of Racoon Installer!"
         },
         "credits": {
             "title": "Thanks to the following!",
-            "desc": "TinWoo - MrDude\nTinleaf - BlaWar\nAwoo Installer - Huntereb\nHard Drive Support - DarkMatterCore\n\n\nhttps://github.com/Huntereb/Awoo-Installer\nhttps://github.com/blawar/tinleaf\nhttps://github.com/DarkMatterCore/libusbhsfs\n\nThanks for testing - LyuboA"
+            "desc": "TinWoo - MrDude\nAwoo Installer - Huntereb\nHard Drive Support - DarkMatterCore\n\n\nhttps://github.com/Huntereb/Awoo-Installer\nhttps://github.com/DarkMatterCore/libusbhsfs\n\n"
         },
         "language": {
-            "title": "Select TinWoo Installer's language",
+            "title": "Select Racoon Installer's language",
             "desc": "The software will be closed after changing languages. Press B to cancel.",
             "system_language": "System"
         },
-        "title": "Change TinWoo Installer's settings!",
+        "title": "Change Racoon Installer's settings!",
         "buttons": "\ue0e0 Select/Change    \ue0e1 Cancel"
     },
     "common": {
@@ -214,5 +213,18 @@
         "yes": "Yes",
         "no": "No",
         "cancel_desc": "Press B to cancel"
+    },
+    "space": {
+        "title":"Información de espacio utilizado",
+        "system":{
+            "size": "System total size",
+            "free": "System free space",
+            "percent": "System percent used"
+        },
+        "SD":{
+            "size": "SD total size",
+            "free": "SD free space",
+            "percent": "SD percent used"
+        }
     }
 }

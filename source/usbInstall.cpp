@@ -138,11 +138,11 @@ namespace usbInstStuff {
             inst::ui::instPage::setInstBarPerc(0);
             std::string audioPath = "";
             if (std::filesystem::exists(inst::config::appDir + "/sounds/OHNO.WAV")) {
-            		audioPath = (inst::config::appDir + "/sounds/OHNO.WAV");
-            		}
-            		else {
-            			audioPath = "romfs:/audio/bark.wav";
-            		}
+                audioPath = (inst::config::appDir + "/sounds/OHNO.WAV");
+            }
+            else {
+                audioPath = "romfs:/audio/bark.wav";
+            }
             std::thread audioThread(inst::util::playAudio,audioPath);
             inst::ui::mainApp->CreateShowDialog("inst.info_page.failed"_lang + fileNames[fileItr] + "!", "inst.info_page.failed_desc"_lang + "\n\n" + (std::string)e.what(), {"common.ok"_lang}, true);
             audioThread.join();
@@ -162,21 +162,21 @@ namespace usbInstStuff {
             std::string audioPath = "";
             
             if (inst::config::useSound) {
-              if (std::filesystem::exists(inst::config::appDir + "/sounds/YIPPEE.WAV")) {
-            		audioPath = (inst::config::appDir + "/sounds/YIPPEE.WAV");
-            		}
-            		else {
-            			audioPath = "romfs:/audio/ameizing.mp3";
-            		}
-            	std::thread audioThread(inst::util::playAudio,audioPath);
+                if (std::filesystem::exists(inst::config::appDir + "/sounds/YIPPEE.WAV")) {
+                    audioPath = (inst::config::appDir + "/sounds/YIPPEE.WAV");
+                }
+                else {
+                    audioPath = "romfs:/audio/ameizing.mp3";
+                }
+                std::thread audioThread(inst::util::playAudio,audioPath);
 
-              if (ourTitleList.size() > 1) inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.info_page.desc0"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
-              else inst::ui::mainApp->CreateShowDialog(fileNames[0] + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
-              audioThread.join();
+                if (ourTitleList.size() > 1) inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.info_page.desc0"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
+                else inst::ui::mainApp->CreateShowDialog(fileNames[0] + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
+                audioThread.join();
             }
             else{
             	if (ourTitleList.size() > 1) inst::ui::mainApp->CreateShowDialog(std::to_string(ourTitleList.size()) + "inst.info_page.desc0"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
-              else inst::ui::mainApp->CreateShowDialog(fileNames[0] + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
+                else inst::ui::mainApp->CreateShowDialog(fileNames[0] + "inst.info_page.desc1"_lang, Language::GetRandomMsg(), {"common.ok"_lang}, true);
             }
         }
         

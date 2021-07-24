@@ -5,11 +5,10 @@
 #include "ui/netInstPage.hpp"
 #include "util/util.hpp"
 #include "util/config.hpp"
+#include "util/color.hpp"
 #include "util/curl.hpp"
 #include "util/lang.hpp"
 #include "netInstall.hpp"
-
-#define COLOR(hex) pu::ui::Color::FromHex(hex)
 
 namespace inst::ui {
     extern MainApplication *mainApp;
@@ -19,40 +18,32 @@ namespace inst::ui {
     std::string sourceString = "";
 
     netInstPage::netInstPage() : Layout::Layout() {
-    this->infoRect = Rectangle::New(0, 95, 1280, 60, COLOR("#00000080"));
-    this->SetBackgroundColor(COLOR("#000000FF"));
-    this->topRect = Rectangle::New(0, 0, 1280, 94, COLOR("#000000FF"));
-		this->botRect = Rectangle::New(0, 659, 1280, 61, COLOR("#000000FF"));
-        
-		if (inst::config::gayMode) {
-			if (std::filesystem::exists(inst::config::appDir + "/images/Net.png")) this->titleImage = Image::New(0, 0, (inst::config::appDir + "/images/Net.png"));
-			else this->titleImage = Image::New(0, 0, "romfs:/images/Net.png");
-			if (std::filesystem::exists(inst::config::appDir + "/images/Background.png")) this->SetBackgroundImage(inst::config::appDir + "/images/Background.png");
-			else this->SetBackgroundImage("romfs:/images/Background.png");
-            this->appVersionText = TextBlock::New(0, 0, "");
-        }
-    else {
-			this->SetBackgroundImage("romfs:/images/Background.png");
-            this->titleImage = Image::New(0, 0, "romfs:/images/Net.png");
-            this->appVersionText = TextBlock::New(0, 0, "");
-        }
-        this->appVersionText->SetColor(COLOR("#FFFFFFFF"));
+        this->infoRect = Rectangle::New(0, 95, 1280, 60, TRANSPARENT_DARK);
+        this->SetBackgroundColor(BLACK);
+        this->topRect = Rectangle::New(0, 0, 1280, 94, TRANSPARENT_LIGHT);
+		this->botRect = Rectangle::New(0, 659, 1280, 61, BLACK);
+        this->SetBackgroundImage(inst::util::getBackground());
+        this->logoImage = Image::New(20, 8, "romfs:/images/mapache-switch.png");
+        this->titleImage = Image::New(160, 8, "romfs:/images/net.webp");
+        this->appVersionText = TextBlock::New(1195, 60, "v" + inst::config::appVersion);
+        this->appVersionText->SetColor(WHITE);
         this->pageInfoText = TextBlock::New(10, 109, "");
-        this->pageInfoText->SetColor(COLOR("#FFFFFFFF"));
+        this->pageInfoText->SetColor(WHITE);
         this->butText = TextBlock::New(10, 678, "");
-        this->butText->SetColor(COLOR("#FFFFFFFF"));
-        this->menu = pu::ui::elm::Menu::New(0, 156, 1280, COLOR("#FFFFFF00"), 84, (506 / 84));
-        this->menu->SetOnFocusColor(COLOR("#4f4f4d33"));
-        this->menu->SetScrollbarColor(COLOR("#1A1919FF"));
+        this->butText->SetColor(WHITE);
+        this->menu = pu::ui::elm::Menu::New(0, 156, 1280, TRANSPARENT, 56, 9);
+        this->menu->SetOnFocusColor(TRANSPARENT_LIGHTER);
+        this->menu->SetScrollbarColor(TRANSPARENT_LIGHTER);
         this->infoImage = Image::New(453, 292, "romfs:/images/icons/lan-connection-waiting.png");
         this->Add(this->topRect);
         this->Add(this->infoRect);
-        this->Add(this->botRect);
+        this->Add(this->logoImage);
         this->Add(this->titleImage);
         this->Add(this->appVersionText);
-        this->Add(this->butText);
         this->Add(this->pageInfoText);
         this->Add(this->menu);
+        this->Add(this->botRect);
+        this->Add(this->butText);
         this->Add(this->infoImage);
     }
 
@@ -63,7 +54,7 @@ namespace inst::ui {
         for (auto& url: this->ourUrls) {
             std::string itm = inst::util::shortenString(inst::util::formatUrlString(url), 56, true);
             auto ourEntry = pu::ui::elm::MenuItem::New(itm);
-            ourEntry->SetColor(COLOR("#FFFFFFFF"));
+            ourEntry->SetColor(WHITE);
             ourEntry->SetIcon("romfs:/images/icons/checkbox-blank-outline.png");
             for (long unsigned int i = 0; i < this->selectedUrls.size(); i++) {
                 if (this->selectedUrls[i] == url) {
@@ -142,12 +133,21 @@ namespace inst::ui {
 
     void netInstPage::startInstall(bool urlMode) {
         int dialogResult = -1;
+        std::vector<std::string> freeSpace = inst::util::mathstuff();
+        std::string info = "space.SD.free"_lang + ": " + freeSpace[4] + " GB\n" + "space.system.free"_lang + ": " + freeSpace[1] + " GB\n\n";
+        std::string dialogTitle;
         if (this->selectedUrls.size() == 1) {
             std::string ourUrlString;
-            if (this->alternativeNames.size() > 0) ourUrlString = inst::util::shortenString(this->alternativeNames[0], 32, true);
-            else ourUrlString = inst::util::shortenString(inst::util::formatUrlString(this->selectedUrls[0]), 32, true);
-            dialogResult = mainApp->CreateShowDialog("inst.target.desc0"_lang + ourUrlString + "inst.target.desc1"_lang, "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
-        } else dialogResult = mainApp->CreateShowDialog("inst.target.desc00"_lang + std::to_string(this->selectedUrls.size()) + "inst.target.desc01"_lang, "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
+            if (this->alternativeNames.size() > 0) {
+                ourUrlString = inst::util::shortenString(this->alternativeNames[0], 32, true);
+            } else {
+                ourUrlString = inst::util::shortenString(inst::util::formatUrlString(this->selectedUrls[0]), 32, true);
+            }
+            dialogTitle = "inst.target.desc0"_lang + ourUrlString + "inst.target.desc1"_lang;
+        } else {
+            dialogTitle = "inst.target.desc00"_lang + std::to_string(this->selectedUrls.size()) + "inst.target.desc01"_lang;
+        }
+        dialogResult = mainApp->CreateShowDialog(dialogTitle, info + "common.cancel_desc"_lang, {"inst.target.opt0"_lang, "inst.target.opt1"_lang}, false);
         if (dialogResult == -1 && !urlMode) return;
         else if (dialogResult == -1 && urlMode) {
             this->startNetwork();

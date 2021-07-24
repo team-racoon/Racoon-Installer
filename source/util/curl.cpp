@@ -42,7 +42,7 @@ namespace inst::curl {
         curl_easy_setopt(curl_handle, CURLOPT_URL, ourUrl.c_str());
         curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl_handle, CURLOPT_SSL_VERIFYPEER, 0L);
-        curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "TinWoo");
+        curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "Racoon");
         curl_easy_setopt(curl_handle, CURLOPT_SSL_VERIFYHOST, 0L);
         curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 0L);
         curl_easy_setopt(curl_handle, CURLOPT_TIMEOUT_MS, timeout);
@@ -76,7 +76,7 @@ namespace inst::curl {
         curl_easy_setopt(curl_handle, CURLOPT_URL, ourUrl.c_str());
         curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl_handle, CURLOPT_SSL_VERIFYPEER, 0L);
-        curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "TinWoo");
+        curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "Racoon");
         curl_easy_setopt(curl_handle, CURLOPT_SSL_VERIFYHOST, 0L);
         curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 0L);
         curl_easy_setopt(curl_handle, CURLOPT_TIMEOUT_MS, timeout);

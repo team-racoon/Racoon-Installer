@@ -11,7 +11,6 @@ namespace inst::ui {
             void onInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
             TextBlock::Ref pageInfoText;
             TextBlock::Ref installInfoText;
-            Image::Ref awooImage;
             pu::ui::elm::ProgressBar::Ref installBar;
             static void setTopInstInfoText(std::string ourText);
             static void setInstInfoText(std::string ourText);
@@ -21,6 +20,7 @@ namespace inst::ui {
         private:
             Rectangle::Ref infoRect;
             Rectangle::Ref topRect;
+            Image::Ref logoImage;
             Image::Ref titleImage;
             TextBlock::Ref appVersionText;
     };

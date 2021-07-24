@@ -1,0 +1,9 @@
+#pragma once
+
+#define COLOR(hex) pu::ui::Color::FromHex(hex)
+#define WHITE COLOR("#FFFFFFFF")
+#define BLACK COLOR("#000000FF")
+#define TRANSPARENT COLOR("#FFFFFF00")
+#define TRANSPARENT_LIGHT COLOR("#00000060")
+#define TRANSPARENT_LIGHTER COLOR("#00000030")
+#define TRANSPARENT_DARK COLOR("#00000080")

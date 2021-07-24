@@ -6,124 +6,27 @@
 #include "ui/mainPage.hpp"
 #include "util/util.hpp"
 #include "util/config.hpp"
+#include "util/color.hpp"
 #include "util/lang.hpp"
 #include "sigInstall.hpp"
 #include "data/buffered_placeholder_writer.hpp"
 #include "nx/usbhdd.h"
-#include <sys/statvfs.h>
-
-#define COLOR(hex) pu::ui::Color::FromHex(hex)
-	
-int statvfs(const char *path, struct statvfs *buf);
-
-double GetAvailableSpace(const char* path)
-{
-  struct statvfs stat;
-
-  if (statvfs(path, &stat) != 0) {
-    // error happens, just quits here
-    return -1;
-  }
-
-  // the available size is f_bsize * f_bavail
-  return stat.f_bsize * stat.f_bavail;
-}
-
-double amountOfDiskSpaceUsed(const char* path)
-{
-    struct statvfs stat;
-
-    if (statvfs(path, &stat) != 0) {
-      // error happens, just quits here
-      return -1;
-    }
-    const auto total           = static_cast<unsigned long>(stat.f_blocks);
-    const auto available       = static_cast<unsigned long>(stat.f_bavail);
-    const auto availableToRoot = static_cast<unsigned long>(stat.f_bfree);
-    const auto used            = total - availableToRoot;
-    const auto nonRootTotal    = used + available;
-    return 100.0 * static_cast<double>(used) / static_cast<double>(nonRootTotal);
-}
-
-double totalsize(const char* path)
-{
-    struct statvfs stat;
-
-    if (statvfs(path, &stat) != 0) {
-      // error happens, just quits here
-      return -1;
-    }
-    return stat.f_blocks * stat.f_frsize;
-}
 
 namespace inst::ui {
     extern MainApplication *mainApp;
     bool appletFinished = false;
     bool updateFinished = false;
 
-    void mathstuff() {
-    	double math = (GetAvailableSpace("./") / 1024) / 1024; //megabytes
-    	float math2 = ((float)math / 1024); //gigabytes
-    	
-    	double used = (amountOfDiskSpaceUsed("./")); //same file path as sdmc
-    	
-    	double total = (totalsize("sdmc:/") / 1024) / 1024; //megabytes
-    	float total2 = ((float)total / 1024); //gigabytes
-    	//
-    	float GB = math2;
-    	std::stringstream stream;
-    	stream << std::fixed << std::setprecision(2) << GB; //only show 2 decimal places
-    	std::string freespace = stream.str();
-    		
-    		
-    	float GB2 = total2;
-    	std::stringstream stream2;
-    	stream2 << std::fixed << std::setprecision(2) << GB2; //only show 2 decimal places
-    	std::string sdsize = stream2.str();
-    	   		
-    	//printf("\nSdCard Free Space in MB: %li", math);
-    	//printf("\nSdCard Free Space in GB: %.2f", math2);
-    	std::stringstream stream3;
-    	stream3 << std::fixed << std::setprecision(2) << used; //only show 2 decimal places
-    	std::string percent = stream3.str();
-    		
-    	//unmount sd here and mount system....
-    	//fsdevUnmountDevice("sdmc");
-    	FsFileSystem nandFS;
-    	fsOpenBisFileSystem(&nandFS, FsBisPartitionId_User, "");
-      fsdevMountDevice("user", nandFS);
-      
-      double math3 = (GetAvailableSpace("user:/") / 1024) / 1024; //megabytes
-    	float math4 = ((float)math3 / 1024); //gigabytes
-    	
-    	double used2 = (amountOfDiskSpaceUsed("user:/")); //same file path as sdmc
-    	
-    	double total3 = (totalsize("user:/") / 1024) / 1024; //megabytes
-    	float total4 = ((float)total3 / 1024); //gigabytes
-    	//
-    	float GB3 = math4;
-    	std::stringstream stream4;
-    	stream4 << std::fixed << std::setprecision(2) << GB3; //only show 2 decimal places
-    	std::string freespace2 = stream4.str();
-    		
-    		
-    	float GB4 = total4;
-    	std::stringstream stream5;
-    	stream5 << std::fixed << std::setprecision(2) << GB4; //only show 2 decimal places
-    	std::string sdsize2 = stream5.str();
-    	   		
-    	//printf("\nSdCard Free Space in MB: %li", math);
-    	//printf("\nSdCard Free Space in GB: %.2f", math2);
-    	std::stringstream stream6;
-    	stream6 << std::fixed << std::setprecision(2) << used2; //only show 2 decimal places
-    	std::string percent2 = stream6.str();
-    	
-    	//unmount user now as we already know how much space we have	
-    	fsdevUnmountDevice("user");
-    	
-    	
-    	std::string Info = ("System total size: " + sdsize2 + " GB" + "\nSystem free space: " + freespace2 + " GB" + "\nSystem percent used: " + percent2 + "%" + "\n\n" + "SD card total size: " + sdsize + " GB" + "\nSD card free space: " + freespace + " GB" + "\nSD card percent used: " + percent + "%");
-      inst::ui::mainApp->CreateShowDialog("Space Usage Information", Info, {"common.ok"_lang}, true);
+    void showFreeSpace(){
+        std::vector<std::string> values = inst::util::mathstuff();
+        std::string sdsize2 = values[0];
+        std::string freespace2 = values[1];
+        std::string percent2 = values[2];
+        std::string sdsize = values[3];
+        std::string freespace = values[4];
+        std::string percent = values[5];
+        std::string Info = ("space.system.size"_lang + ": " + sdsize2 + " GB" + "\n"+"space.system.free"_lang + ": " + freespace2 + " GB" + "\n"+"space.system.percent"_lang + ": " + percent2 + "%" + "\n\n" + "space.SD.size"_lang + ": " + sdsize + " GB" + "\n"+"space.SD.free"_lang + ": " + freespace + " GB" + "\n"+"space.SD.percent"_lang + ": " + percent + "%");
+        inst::ui::mainApp->CreateShowDialog("space.title"_lang, Info, {"common.ok"_lang}, true);
     }
     
     void mainMenuThread() {
@@ -146,72 +49,59 @@ namespace inst::ui {
         }
     }
 
+    Image::Ref getRacoonImage() {
+        if( appletGetAppletType() == AppletType_LibraryApplet) {
+            return Image::New( 630, 89, "romfs:/images/applet.webp");
+        } return Image::New( 690, 200, "romfs:/images/override.webp");
+    }
+
     MainPage::MainPage() : Layout::Layout() {
-        this->SetBackgroundColor(COLOR("#000000FF"));
-        this->topRect = Rectangle::New(0, 0, 1280, 94, COLOR("#000000FF"));
-        this->botRect = Rectangle::New(0, 659, 1280, 61, COLOR("#000000FF"));
-        
-        if (inst::config::gayMode) {
-        	if (std::filesystem::exists(inst::config::appDir + "/images/Main.png")) this->titleImage = Image::New(0, 0, (inst::config::appDir + "/images/Main.png"));
-        	else 
-        		this->titleImage = Image::New(0, 0, "romfs:/images/Main.png");
-        	if (std::filesystem::exists(inst::config::appDir + "/images/Background.png")) this->SetBackgroundImage(inst::config::appDir + "/images/Background.png");
-        	else
-        		this->SetBackgroundImage("romfs:/images/Background.png");
-        		//this->appVersionText = TextBlock::New(1240, 680, "v" + inst::config::appVersion);
-        }
-        else {
-        	this->SetBackgroundImage("romfs:/images/Background.png");
-        	this->titleImage = Image::New(0, 0, "romfs:/images/Main.png");
-        	//this->appVersionText = TextBlock::New(1200, 700, "v" + inst::config::appVersion);
-        }
-        //this->appVersionText->SetColor(COLOR("#FFFFFFFF"));
+        this->SetBackgroundColor(BLACK);
+        this->topRect = Rectangle::New(0, 0, 1280, 94, TRANSPARENT_LIGHT);
+        this->botRect = Rectangle::New(0, 659, 1280, 61, BLACK);
+        this->SetBackgroundImage(inst::util::getBackground());
+        this->logoImage = Image::New(20, 8, "romfs:/images/mapache-switch.png");
+        this->appVersionText = TextBlock::New(1195, 60, "v" + inst::config::appVersion);
+        this->appVersionText->SetColor(WHITE);
         this->butText = TextBlock::New(10, 678, "main.buttons"_lang);
-        this->butText->SetColor(COLOR("#FFFFFFFF"));
-        this->optionMenu = pu::ui::elm::Menu::New(0, 95, 1280, COLOR("#343E8700"), 94, 6);
-        this->optionMenu->SetOnFocusColor(COLOR("#4f4f4d33"));
-        this->optionMenu->SetScrollbarColor(COLOR("#1A1919FF"));
+        this->butText->SetColor(WHITE);
+        this->optionMenu = pu::ui::elm::Menu::New(0, 95, 1280, TRANSPARENT, 94, 6);
+        this->optionMenu->SetOnFocusColor(TRANSPARENT_LIGHTER);
+        this->optionMenu->SetScrollbarColor(TRANSPARENT_LIGHTER);
         this->installMenuItem = pu::ui::elm::MenuItem::New("main.menu.sd"_lang);
-        this->installMenuItem->SetColor(COLOR("#FFFFFFFF"));
-        this->installMenuItem->SetIcon("romfs:/images/icons/micro-sd.png");
+        this->installMenuItem->SetColor(WHITE);
+        this->installMenuItem->SetIcon("romfs:/images/icons/microsd-icon.png");
         this->netInstallMenuItem = pu::ui::elm::MenuItem::New("main.menu.net"_lang);
-        this->netInstallMenuItem->SetColor(COLOR("#FFFFFFFF"));
-        this->netInstallMenuItem->SetIcon("romfs:/images/icons/cloud-download.png");
+        this->netInstallMenuItem->SetColor(WHITE);
+        this->netInstallMenuItem->SetIcon("romfs:/images/icons/cloud-icon.png");
         this->usbInstallMenuItem = pu::ui::elm::MenuItem::New("main.menu.usb"_lang);
-        this->usbInstallMenuItem->SetColor(COLOR("#FFFFFFFF"));
-        this->usbInstallMenuItem->SetIcon("romfs:/images/icons/usb-port.png");
-        this->sigPatchesMenuItem = pu::ui::elm::MenuItem::New("main.menu.hdd"_lang);
-        this->sigPatchesMenuItem->SetColor(COLOR("#FFFFFFFF"));
-        this->sigPatchesMenuItem->SetIcon("romfs:/images/icons/usb-hd.png");
+        this->usbInstallMenuItem->SetColor(WHITE);
+        this->usbInstallMenuItem->SetIcon("romfs:/images/icons/usb-icon.png");
+        this->hddInstallMenuItem = pu::ui::elm::MenuItem::New("main.menu.hdd"_lang);
+        this->hddInstallMenuItem->SetColor(WHITE);
+        this->hddInstallMenuItem->SetIcon("romfs:/images/icons/hdd-icon.png");
         this->settingsMenuItem = pu::ui::elm::MenuItem::New("main.menu.set"_lang);
-        this->settingsMenuItem->SetColor(COLOR("#FFFFFFFF"));
-        this->settingsMenuItem->SetIcon("romfs:/images/icons/settings.png");
+        this->settingsMenuItem->SetColor(WHITE);
+        this->settingsMenuItem->SetIcon("romfs:/images/icons/settings-icon.png");
         this->exitMenuItem = pu::ui::elm::MenuItem::New("main.menu.exit"_lang);
-        this->exitMenuItem->SetColor(COLOR("#FFFFFFFF"));
-        this->exitMenuItem->SetIcon("romfs:/images/icons/exit-run.png");
-        if (inst::config::gayMode) {
-        	if (std::filesystem::exists(inst::config::appDir + "/images/Main.png")) this->awooImage = Image::New(0, 0, inst::config::appDir + "/images/Main.png");
-        	else this->awooImage = Image::New(0, 0, "romfs:/images/Main.png");
-      	}
-      	else{
-      		this->awooImage = Image::New(0, 0, "romfs:/images/Main.png");
-      	}
-        this->eggImage = Image::New(0, 0, "");
+        this->exitMenuItem->SetColor(WHITE);
+        this->exitMenuItem->SetIcon("romfs:/images/icons/exit-icon.png");
+        this->titleImage = Image::New(160, 8, "romfs:/images/title.webp");
+        this->racoonImage = getRacoonImage();
         this->Add(this->topRect);
-        this->Add(this->botRect);
-        this->Add(this->titleImage);
-        //this->Add(this->appVersionText);
-        this->Add(this->butText);
+        this->Add(this->logoImage);
         this->optionMenu->AddItem(this->installMenuItem);
         this->optionMenu->AddItem(this->netInstallMenuItem);
         this->optionMenu->AddItem(this->usbInstallMenuItem);
-        this->optionMenu->AddItem(this->sigPatchesMenuItem);
+        this->optionMenu->AddItem(this->hddInstallMenuItem);
         this->optionMenu->AddItem(this->settingsMenuItem);
         this->optionMenu->AddItem(this->exitMenuItem);
-        this->Add(this->awooImage);
-        this->Add(this->eggImage);
-        this->awooImage->SetVisible(!inst::config::gayMode);
         this->Add(this->optionMenu);
+        this->Add(this->botRect);
+        this->Add(this->butText);
+        this->Add(this->titleImage);
+        this->Add(this->racoonImage);
+        this->Add(this->appVersionText);
         this->AddThread(mainMenuThread);
     }
 
@@ -240,7 +130,7 @@ namespace inst::ui {
         else mainApp->CreateShowDialog("main.usb.error.title"_lang, "main.usb.error.desc"_lang, {"common.ok"_lang}, false);
     }
 
-    void MainPage::sigPatchesMenuItem_Click() {
+    void MainPage::hddInstallMenuItem_Click() {
 		if(nx::hdd::count() && nx::hdd::rootPath()) {
 			mainApp->HDinstPage->drawMenuItems(true, nx::hdd::rootPath());
 			mainApp->HDinstPage->menu->SetSelectedIndex(0);
@@ -260,7 +150,7 @@ namespace inst::ui {
     }
 
     void MainPage::onInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
-        if (((Down & HidNpadButton_Plus) || (Down & HidNpadButton_MINUS) || (Down & HidNpadButton_B)) && mainApp->IsShown()) {
+        if (((Down & HidNpadButton_Plus) || (Down & HidNpadButton_Minus) || (Down & HidNpadButton_B)) && mainApp->IsShown()) {
             mainApp->FadeOut();
             mainApp->Close();
         }
@@ -276,7 +166,7 @@ namespace inst::ui {
                     MainPage::usbInstallMenuItem_Click();
                     break;
                 case 3:
-                    MainPage::sigPatchesMenuItem_Click();
+                    MainPage::hddInstallMenuItem_Click();
                     break;
                 case 4:
                     MainPage::settingsMenuItem_Click();
@@ -290,15 +180,14 @@ namespace inst::ui {
         }
         
         if (Down & HidNpadButton_X) {
-            this->awooImage->SetVisible(false);
-            this->eggImage->SetVisible(true);
+            // this->logoImage->SetVisible(false);
+            // this->racoonImage->SetVisible(true);
         }
         if (Up & HidNpadButton_X) {
-            this->eggImage->SetVisible(false);
-            if (!inst::config::gayMode) this->awooImage->SetVisible(true);
+            // this->racoonImage->SetVisible(false);
         }
         if (Down & HidNpadButton_Y) {
-        		mathstuff();
+        		showFreeSpace();
         }
     }
 }

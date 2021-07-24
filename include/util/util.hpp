@@ -18,7 +18,9 @@ namespace inst::util {
     std::string getDriveFileName(std::string fileId);
     std::vector<uint32_t> setClockSpeed(int deviceToClock, uint32_t clockSpeed);
     std::string getIPAddress();
+    std::string getBackground();
     int getUsbState();
     void playAudio(std::string audioPath);
     std::vector<std::string> checkForAppUpdate();
+    std::vector<std::string> mathstuff();
 }

@@ -262,10 +262,10 @@ namespace pu::ui::elm
                 if(this->isel == i)
                 {
                     Drawer->RenderRectangleFill(this->clr, cx, cy, cw, ch);
-                    if(this->selfact < 255)
+                    if(this->selfact < this->clr.A)
                     {
                         Drawer->RenderRectangleFill(Color(this->fcs.R, this->fcs.G, this->fcs.B, this->selfact), cx, cy, cw, ch);
-                        this->selfact += 48;
+                        this->selfact += 32;
                     }
                     else Drawer->RenderRectangleFill(this->fcs, cx, cy, cw, ch);
                 }
@@ -275,7 +275,7 @@ namespace pu::ui::elm
                     if(this->pselfact > 0)
                     {
                         Drawer->RenderRectangleFill(Color(this->fcs.R, this->fcs.G, this->fcs.B, this->pselfact), cx, cy, cw, ch);
-                        this->pselfact -= 48;
+                        this->pselfact -= 32;
                     }
                     else Drawer->RenderRectangleFill(this->clr, cx, cy, cw, ch);
                 }
@@ -414,7 +414,7 @@ namespace pu::ui::elm
                             if(!this->itms.empty()) for(i32 i = 0; i < this->itms.size(); i++)
                             {
                                 if(i == this->isel) this->selfact = 0;
-                                else if(i == this->previsel) this->pselfact = 255;
+                                else if(i == this->previsel) this->pselfact = this->clr.A;
                             }
                         }
                     }
@@ -465,7 +465,7 @@ namespace pu::ui::elm
                             if(!this->itms.empty()) for(i32 i = 0; i < this->itms.size(); i++)
                             {
                                 if(i == this->isel) this->selfact = 0;
-                                else if(i == this->previsel) this->pselfact = 255;
+                                else if(i == this->previsel) this->pselfact = this->clr.A;
                             }
                         }
                     }

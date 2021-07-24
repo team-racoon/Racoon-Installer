@@ -28,7 +28,10 @@ SOFTWARE.
 #include <cstring>
 #include <sstream>
 #include "util/error.hpp"
-
+#include "ui/MainApplication.hpp"
+namespace inst::ui {
+    extern MainApplication *mainApp;
+}
 namespace tin::network
 {
     // HTTPHeader

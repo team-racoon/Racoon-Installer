@@ -3,9 +3,9 @@
 #include <vector>
 
 namespace inst::config {
-    static const std::string appDir = "sdmc:/switch/tinwoo";
+    static const std::string appDir = "sdmc:/switch/Racoon-Installer";
     static const std::string configPath = appDir + "/config.json";
-    static const std::string appVersion = "1.0.3";
+    static const std::string appVersion = "1.1.0";
 
     extern std::string gAuthKey;
     extern std::string sigPatchesUrl;
@@ -17,7 +17,6 @@ namespace inst::config {
     extern bool deletePrompt;
     extern bool autoUpdate;
     extern bool usbAck;
-    extern bool gayMode;
     extern bool useSound;
 
     void setConfig();
