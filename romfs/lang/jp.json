@@ -11,7 +11,7 @@
         },
 		"theme": {
             "title": "Use Theme",
-            "desc": "Press OK to quit Tinwoo or Cancel to continue.\n\nThemes will activate the next time you start Tinwoo."
+            "desc": "Press OK to quit Racoon or Cancel to continue.\n\nThemes will activate the next time you start Racoon."
 		},
 		"hdd": {
 			"title": "USB HDD",
@@ -34,7 +34,7 @@
         },
         "applet": {
             "title": "アプレットモードはサポートされていません",
-            "desc": "アプレットモードでTinWooを使用すると問題が発生する場合があります。\n問題が発生した場合は、インストール済みのタイトルでTinWooを実行するように切り替えてください\n(ゲームの開始中にRを押したままにしてください)!"
+            "desc": "アプレットモードでRacoonを使用すると問題が発生する場合があります。\n問題が発生した場合は、インストール済みのタイトルでRacoonを実行するように切り替えてください\n(ゲームの開始中にRを押したままにしてください)!"
         },
         "buttons": "\ue0e0 選択    \ue0e3 フリースペース    \ue0e1 終了"
     },
@@ -42,7 +42,7 @@
         "net": {
             "help": {
                 "title": "ヘルプ",
-                "desc": "TinfoilモードのNS-USBloaderなどのツールを使用して、他のデバイスからファイルをリモートでインストールできます。\nスイッチにファイルを送信するには、PCまたはモバイルデバイスでこれらのソフトウェアのいずれかを開き、\nスイッチのIPアドレス（画面に表示）を入力し、ファイルを選択して、コンソールにアップロードします！\n使用しているソフトウェアで特定のファイルタイプを選択できない場合は、\n拡張子の名前を受け入れ可能なものに変更してください。\nTinWooはネット経由のインストール中にファイル拡張子を気にしません！\n\n分からない場合は、ファイルをSDカードにコピーして\nメインメニューの[SDカードからインストール]オプションを試してください。"
+                "desc": "TinfoilモードのNS-USBloaderなどのツールを使用して、他のデバイスからファイルをリモートでインストールできます。\nスイッチにファイルを送信するには、PCまたはモバイルデバイスでこれらのソフトウェアのいずれかを開き、\nスイッチのIPアドレス（画面に表示）を入力し、ファイルを選択して、コンソールにアップロードします！\n使用しているソフトウェアで特定のファイルタイプを選択できない場合は、\n拡張子の名前を受け入れ可能なものに変更してください。\nRacoonはネット経由のインストール中にファイル拡張子を気にしません！\n\n分からない場合は、ファイルをSDカードにコピーして\nメインメニューの[SDカードからインストール]オプションを試してください。"
             },
             "src": {
                 "title": "どこからインストールしますか？",
@@ -124,7 +124,7 @@
         },
         "nca_verify": {
             "title": "無効なNCA署名が検出されました!",
-            "desc": "不適切に署名されたソフトウェアは、信頼できるソースからのみインストールする必要があります。\nカートリッジの再梱包とDLCロック解除を含むファイルには、常にこの警告が表示されます。\nTinWooの設定でこのチェックを無効にできます。\n\nインストールを続行してもよろしいですか？",
+            "desc": "不適切に署名されたソフトウェアは、信頼できるソースからのみインストールする必要があります。\nカートリッジの再梱包とDLCロック解除を含むファイルには、常にこの警告が表示されます。\nRacoonの設定でこのチェックを無効にできます。\n\nインストールを続行してもよろしいですか？",
             "opt1": "はい、リスクを理解しています",
             "error": "要求されたNCAは適切に署名されていません: "
         },
@@ -148,7 +148,7 @@
         "backup_failed": "Hekate patch.iniをバックアップできませんでした！それでもインストールしますか?",
         "backup_failed_desc": "Hekateを使用しない場合、この警告は無視できます。",
         "download_failed": "署名パッチをダウンロードできませんでした",
-        "download_failed_desc": "TinWooの設定で無効なソースを指定したか、\nホストが現在ダウンしている可能性があります。",
+        "download_failed_desc": "Racoonの設定で無効なソースを指定したか、\nホストが現在ダウンしている可能性があります。",
         "version_text2": "署名パッチがHOSバージョンまで更新されました ",
         "install_complete": "インストール完了!",
         "complete_desc": "本体を再起動して適用します",
@@ -167,12 +167,12 @@
             "nca_verify": "インストール前にNCA署名を検証する",
             "boost_mode": "インストール中に「ブーストモード」を有効にする",
             "ask_delete": "インストール後に元のファイルを削除する",
-            "auto_update": "TinWooのアップデートを自動的に確認する",
+            "auto_update": "Racoonのアップデートを自動的に確認する",
             "gay_option": "テーマを使用する",
             "useSound": "Use sound notifications during installs",
             "sig_url": "署名パッチのソースURL: ",
             "language": "言語: ",
-            "check_update": "TinWoo Installerのアップデートを確認",
+            "check_update": "Racoon Installerのアップデートを確認",
             "credits": "クレジット"
         },
         "nca_warn": {
@@ -183,28 +183,28 @@
         "sig_hint": "署名パッチを取得するURLを入力します",
         "update": {
             "title": "更新可能",
-            "desc0": "TinWoo Installer ",
+            "desc0": "Racoon Installer ",
             "desc1": " 現在入手可能です！更新する準備ができましたか?",
             "opt0": "アップデート",
-            "top_info": "TinWoo Installerを更新 ",
-            "bot_info": "TinWoo Installerをダウンロード中 ",
-            "bot_info2": "TinWoo Installerを展開中 ",
+            "top_info": "Racoon Installerを更新 ",
+            "bot_info": "Racoon Installerをダウンロード中 ",
+            "bot_info2": "Racoon Installerを展開中 ",
             "complete": "更新完了!",
             "failed": "更新失敗!",
             "end_desc": "これでソフト​​ウェアが閉じられます。",
             "title_check_fail": "更新が見つかりません",
-            "desc_check_fail": "既にTinWoo Installerの最新バージョンを使用しています!"
+            "desc_check_fail": "既にRacoon Installerの最新バージョンを使用しています!"
         },
         "credits": {
             "title": "以下の方々に感謝します!",
-            "desc": "TinWoo - MrDude\nTinleaf - BlaWar\nAwoo Installer - Huntereb\nHard Drive Support - DarkMatterCore\n\n\nhttps://github.com/Huntereb/Awoo-Installer\nhttps://github.com/blawar/tinleaf\nhttps://github.com/DarkMatterCore/libusbhsfs\n\nThanks for testing - LyuboA"
+            "desc": "TinWoo - MrDude\nAwoo Installer - Huntereb\nHard Drive Support - DarkMatterCore\n\n\nhttps://github.com/Huntereb/Awoo-Installer\nhttps://github.com/blawar/tinleaf\nhttps://github.com/DarkMatterCore/libusbhsfs\n\nThanks for testing - LyuboA"
         },
         "language": {
-            "title": "TinWoo Installerの言語を選択",
+            "title": "Racoon Installerの言語を選択",
             "desc": "言語を変更した後、ソフトウェアは閉じられます。 Bを押してキャンセルします。",
             "system_language": "システムのデフォルト"
         },
-        "title": "TinWoo Installerの設定を変更する",
+        "title": "Racoon Installerの設定を変更する",
         "buttons": "\ue0e0 選択/変更    \ue0e1 キャンセル"
     },
     "common": {
@@ -214,5 +214,18 @@
         "yes": "はい",
         "no": "いいえ",
         "cancel_desc": "Bを押してキャンセル"
+    },
+    "space": {
+        "title":"使用済みスペース情報",
+        "system":{
+            "size": "System total size",
+            "free": "System free space",
+            "percent": "System percent used"
+        },
+        "SD":{
+            "size": "SD total size",
+            "free": "SD free space",
+            "percent": "SD percent used"
+        }
     }
 }

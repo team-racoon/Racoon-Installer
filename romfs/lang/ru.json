@@ -11,7 +11,7 @@
         },
 		"theme": {
             "title": "Use Theme",
-            "desc": "Press OK to quit Tinwoo or Cancel to continue.\n\nThemes will activate the next time you start Tinwoo."
+            "desc": "Press OK to quit ракун or Cancel to continue.\n\nThemes will activate the next time you start ракун."
 		},
 		"hdd": {
 			"title": "USB HDD",
@@ -34,7 +34,7 @@
         },
         "applet": {
             "title": "Applet Mode не поддерживается",
-            "desc": "В TinWoo Installer могут возникать проблемы когда и если он запущен в режиме апплета.\nЕсли у вас есть трудности, пожалуйста запустите приложение через установленную игру\n(зажмите R при запуске)!"
+            "desc": "В ракун Installer могут возникать проблемы когда и если он запущен в режиме апплета.\nЕсли у вас есть трудности, пожалуйста запустите приложение через установленную игру\n(зажмите R при запуске)!"
         },
         "buttons": "\ue0e0 Выбрать    \ue0e3 Свободное место    \ue0e1 Выход"
     },
@@ -42,7 +42,7 @@
         "net": {
             "help": {
                 "title": "Помощь",
-                "desc": "Файлы могут быть установленны удалённо из другого вашего устройства используя такие утилиты как\nNS-USBloader в режиме Tinfoil. Чтобы передать файлы на Switch откройте одно из этих замечательных\nприложений на вашем ПК или мобильном устройстве, введите IP адрес вашего Switch (отображается на экране),\nвыберите файлы и затем загрузите их в вашу консоль! Если приложение которое вы используете не позволяет\nвыбрать определённый формат файла, попробуйте изменить его расширение.\nTinWoo Installer не чувствителен\nк расширениям файла при установке по сети!\n\nЕсли вы ничего не поняли, просто скопируйте файлы на SD-карту и выберите в главном меню опцию\n\"Установка из SD-карты\"!"
+                "desc": "Файлы могут быть установленны удалённо из другого вашего устройства используя такие утилиты как\nNS-USBloader в режиме Tinfoil. Чтобы передать файлы на Switch откройте одно из этих замечательных\nприложений на вашем ПК или мобильном устройстве, введите IP адрес вашего Switch (отображается на экране),\nвыберите файлы и затем загрузите их в вашу консоль! Если приложение которое вы используете не позволяет\nвыбрать определённый формат файла, попробуйте изменить его расширение.\nракун Installer не чувствителен\nк расширениям файла при установке по сети!\n\nЕсли вы ничего не поняли, просто скопируйте файлы на SD-карту и выберите в главном меню опцию\n\"Установка из SD-карты\"!"
             },
             "src": {
                 "title": "Откуда будем устанавливать?",
@@ -124,7 +124,7 @@
         },
         "nca_verify": {
             "title": "Обнаружена неверная NCA подпись!",
-            "desc": "Неверно подписанное программное обеспечение должно устанавливаться исключительно из проверенных источников!\nФайлы содержащие перепакованные картриджи и разблокировщики DLC будут всегда приводить к показу этого\nпредупреждения. Вы можете отключить эту проверку в настройках TinWoo Installer\n Вы уверены что хотите продолжить установку?",
+            "desc": "Неверно подписанное программное обеспечение должно устанавливаться исключительно из проверенных источников!\nФайлы содержащие перепакованные картриджи и разблокировщики DLC будут всегда приводить к показу этого\nпредупреждения. Вы можете отключить эту проверку в настройках ракун Installer\n Вы уверены что хотите продолжить установку?",
             "opt1": "Да, я понимаю все риски",
             "error": "Запрашиваемый NCA неверно подписан: "
         },
@@ -148,7 +148,7 @@
         "backup_failed": "Не удалось сделать копию Hekate patches.ini! Всё равно установить?",
         "backup_failed_desc": "Игнорируйте это предупреждение если вы не исользуете Hekate.",
         "download_failed": "Не удалось загрузить signature patches",
-        "download_failed_desc": "Возможно вы указали неправильный источник в настройках TinWoo Installer,\nили же сервер просто недоступен.",
+        "download_failed_desc": "Возможно вы указали неправильный источник в настройках ракун Installer,\nили же сервер просто недоступен.",
         "version_text2": "Ваши signature patches были обновлены до HOS версии ",
         "install_complete": "Установка завершена!",
         "complete_desc": "Презапустите вашу консоль чтобы изменения вступили в силу",
@@ -172,7 +172,7 @@
             "useSound": "Use sound notifications during installs",
             "sig_url": "URL для скачивания Signature patches: ",
             "language": "Язык: ",
-            "check_update": "Проверить наличие обновлений TinWoo Installer",
+            "check_update": "Проверить наличие обновлений ракун Installer",
             "credits": "Благодарности"
         },
         "nca_warn": {
@@ -183,28 +183,28 @@
         "sig_hint": "Введите URL откуда следует брать Signature Patches",
         "update": {
             "title": "Доступно обновление",
-            "desc0": "TinWoo Installer ",
+            "desc0": "ракун Installer ",
             "desc1": " уже доступен! Готовы обновиться?",
             "opt0": "Обновление",
-            "top_info": "Обновление TinWoo Installer ",
-            "bot_info": "Загрузка TinWoo Installer ",
-            "bot_info2": "Извлечение TinWoo Installer ",
+            "top_info": "Обновление ракун Installer ",
+            "bot_info": "Загрузка ракун Installer ",
+            "bot_info2": "Извлечение Racoоn Installer ",
             "complete": "Обновление завершено!",
             "failed": "Обновление провалилось!",
             "end_desc": "Сейчас приложение будет закрыто.",
             "title_check_fail": "Обновлений нет",
-            "desc_check_fail": "Вы уже используете последнюю версию TinWoo Installer!"
+            "desc_check_fail": "Вы уже используете последнюю версию ракун Installer!"
         },
         "credits": {
             "title": "Выражаем благодарность следующим людям:",
-            "desc": "TinWoo - MrDude\nTinleaf - BlaWar\nAwoo Installer - Huntereb\nHard Drive Support - DarkMatterCore\n\n\nhttps://github.com/Huntereb/Awoo-Installer\nhttps://github.com/blawar/tinleaf\nhttps://github.com/DarkMatterCore/libusbhsfs\n\nThanks for testing - LyuboA"
+            "desc": "TinWoo - MrDude\nAwoo Installer - Huntereb\nHard Drive Support - DarkMatterCore\n\n\nhttps://github.com/Huntereb/Awoo-Installer\nhttps://github.com/blawar/tinleaf\nhttps://github.com/DarkMatterCore/libusbhsfs\n\nThanks for testing - LyuboA"
         },
         "language": {
         "title": "Выбор языка",
         "desc": "После изменения языка приложение будет закрыто. Нажмите B для отмены.",
         "system_language": "Системный"
         },
-        "title": "Меняйте настройки TinWoo Installer!",
+        "title": "Меняйте настройки ракун Installer!",
         "buttons": "\ue0e0 Выбрать/Изменить    \ue0e1 Отмена"
     },
     "common": {
@@ -214,5 +214,18 @@
         "yes": "Да",
         "no": "Нет",
         "cancel_desc": "Нажмите B для отмены"
+    },
+    "space": {
+        "title":"Информация об использованном пространстве",
+        "system":{
+            "size": "System total size",
+            "free": "System free space",
+            "percent": "System percent used"
+        },
+        "SD":{
+            "size": "SD total size",
+            "free": "SD free space",
+            "percent": "SD percent used"
+        }
     }
 }

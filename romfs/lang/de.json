@@ -214,5 +214,18 @@
         "yes": "Ja",
         "no": "Nein",
         "cancel_desc": "Drücke \ue0e1 zum Abbrechen "
+    },
+    "space": {
+        "title":"Informationen zum belegten Speicherplatz",
+        "system":{
+            "size": "System total size",
+            "free": "System free space",
+            "percent": "System percent used"
+        },
+        "SD":{
+            "size": "SD total size",
+            "free": "SD free space",
+            "percent": "SD percent used"
+        }
     }
 }

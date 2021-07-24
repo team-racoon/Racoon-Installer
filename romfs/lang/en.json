@@ -215,7 +215,7 @@
         "cancel_desc": "Press B to cancel"
     },
     "space": {
-        "title":"Información de espacio utilizado",
+        "title":"Used space information",
         "system":{
             "size": "System total size",
             "free": "System free space",

@@ -167,7 +167,7 @@
             "useSound": "Reproducir notificaciones durante las instalaciones",
 			"sig_url": "URL para la instalación de sigpatches: ",
             "language": "Idioma: ",
-            "check_update": "Buscar actualizaciones de Raccon Installer",
+            "check_update": "Buscar actualizaciones de Racoon Installer",
             "credits": "Créditos"
         },
         "nca_warn": {
