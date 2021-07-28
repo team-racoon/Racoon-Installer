@@ -68,10 +68,11 @@ namespace inst::util {
         if (!std::filesystem::exists("sdmc:/switch")) std::filesystem::create_directory("sdmc:/switch");
         if (!std::filesystem::exists(inst::config::appDir)) std::filesystem::create_directory(inst::config::appDir);
         inst::config::parseConfig();
-
-        socketInitializeDefault();
+        if (R_FAILED(socketInitializeDefault())) return;
         #ifdef __DEBUG__
-            nxlinkStdio();
+            int nxlinkInit = nxlinkStdio();
+            if (nxlinkInit < 0)
+                socketExit();
         #endif
         tinleaf_usbCommsInitialize();
 

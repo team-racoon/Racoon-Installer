@@ -378,7 +378,7 @@ namespace pu::ui::elm
         }
         else
         {
-            if(Down & HidNpadButton_AnyDown)
+            if((Down & HidNpadButton_AnyDown)||(Held & HidNpadButton_StickRDown))
             {
                 bool move = true;
                 if(Held & HidNpadButton_StickRDown)
@@ -429,7 +429,7 @@ namespace pu::ui::elm
                     }
                 }
             }
-            else if(Down & HidNpadButton_AnyUp)
+            else if((Down & HidNpadButton_AnyUp)||(Held & HidNpadButton_StickRUp))
             {
                 bool move = true;
                 if(Held & HidNpadButton_StickRUp)

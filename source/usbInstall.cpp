@@ -22,6 +22,7 @@ SOFTWARE.
 
 #include <string>
 #include <thread>
+#include <chrono>
 #include <malloc.h>
 #include "usbInstall.hpp"
 #include "install/usb_nsp.hpp"
@@ -120,6 +121,8 @@ namespace usbInstStuff {
                 } else {
                     auto usbNSP = std::make_shared<tin::install::nsp::USBNSP>(ourTitleList[fileItr]);
                     installTask = std::make_unique<tin::install::nsp::NSPInstall>(m_destStorageId, inst::config::ignoreReqVers, usbNSP);
+                    // FIX this.  with the sleep fix the NSP installation
+                    std::this_thread::sleep_for(std::chrono::nanoseconds(10));
                 }
 
                 LOG_DEBUG("%s\n", "Preparing installation");

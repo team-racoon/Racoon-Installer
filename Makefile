@@ -44,7 +44,7 @@ DATA		:=	data
 INCLUDES	:=	include include/ui include/data include/install include/nx include/nx/ipc include/util include/Plutonium/Plutonium/out/include
 APP_TITLE	:=	Racoon Installer
 APP_AUTHOR	:=	MrDude & Team Racoon
-APP_VERSION	:=	1.1.0
+APP_VERSION	:=	1.1.1
 ROMFS		:=	romfs
 APP_ICON	:=	icon.jpg
 
