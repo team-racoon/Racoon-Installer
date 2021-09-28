@@ -6,3 +6,5 @@
 *.elf
 *.nro
 *.nacp
+*.zip
+/switch

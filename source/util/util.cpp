@@ -117,15 +117,17 @@ namespace inst::util {
         std::vector<std::filesystem::path> files;
         for(auto & p: std::filesystem::directory_iterator(dir))
         {
-            if (std::filesystem::is_regular_file(p))
-            {
-                std::string ourExtension = p.path().extension().string();
-                std::transform(ourExtension.begin(), ourExtension.end(), ourExtension.begin(), ::tolower);
-                if (extensions.empty() || std::find(extensions.begin(), extensions.end(), ourExtension) != extensions.end())
+            try{
+                if (std::filesystem::is_regular_file(p))
                 {
-                    files.push_back(p.path());
+                    std::string ourExtension = p.path().extension().string();
+                    std::transform(ourExtension.begin(), ourExtension.end(), ourExtension.begin(), ::tolower);
+                    if (extensions.empty() || std::find(extensions.begin(), extensions.end(), ourExtension) != extensions.end())
+                    {
+                        files.push_back(p.path());
+                    }
                 }
-            }
+            } catch (std::filesystem::filesystem_error & e) {}
         }
         std::sort(files.begin(), files.end(), ignoreCaseCompare);
         return files;
@@ -135,10 +137,12 @@ namespace inst::util {
         std::vector<std::filesystem::path> files;
         for(auto & p: std::filesystem::directory_iterator(dir))
         {
-            if (std::filesystem::is_directory(p))
-            {
-                    files.push_back(p.path());
-            }
+            try{
+                if (std::filesystem::is_directory(p))
+                {
+                        files.push_back(p.path());
+                }
+            } catch (std::filesystem::filesystem_error & e) {}
         }
         std::sort(files.begin(), files.end(), ignoreCaseCompare);
         return files;
